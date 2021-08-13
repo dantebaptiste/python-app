@@ -26,9 +26,9 @@ workflows:
           filters:
             branches:
               ignore:
-                - master
-                - develop
-                - develop_interim
+                - master-removeThisIfYouWantToTestMaster
+                - develop-removeThisIfYouWantToTestDevelop
+                - develop_interim-removeThisIfYouWantToTestDevelopInterim
 
       - Now-Complete:
           requires:

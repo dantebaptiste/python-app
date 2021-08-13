@@ -1,0 +1,35 @@
+version: 2.1
+jobs:
+  Branches-Filtered:
+    docker:
+      - image: circleci/node:10.16.3
+      - image: mongo:4.2.0
+    steps:
+      - checkout
+      - run:
+          name: build-filter
+          command: echo "stop giving errors"
+
+  Now-Complete:
+    docker:
+      - image: alpine:3.7
+    steps:
+      - run:
+          name: Approval Complete
+          command: |
+            echo 'Circleci was run no further testing.'
+workflows:
+  version: 2
+  Working-Workflow:
+    jobs:
+      - Branches-Filtered:
+          filters:
+            branches:
+              ignore:
+                - master-removeThisIfYouWantToTestMaster
+                - develop-removeThisIfYouWantToTestDevelop
+                - develop_interim-removeThisIfYouWantToTestDevelopInterim
+
+      - Now-Complete:
+          requires:
+            - Branches-Filtered

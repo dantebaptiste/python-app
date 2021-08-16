@@ -8,7 +8,21 @@ jobs:
       - checkout
       - run:
           name: build-filter
-          command: echo "stop giving errors"
+          command: echo "This branch will be tested"
+
+  Run-Hello:
+    docker:
+      - image: "circleci/python:3.6.4"
+    steps:
+      - checkout
+      - run: python hello.py
+
+  Test-Hello:
+    docker:
+      - image: "circleci/python:3.6.4"
+    steps:
+      - checkout
+      - run: python test_hello.py
 
   Now-Complete:
     docker:
@@ -17,7 +31,7 @@ jobs:
       - run:
           name: Approval Complete
           command: |
-            echo 'Circleci was run no further testing.'
+            echo 'Tests complete.'
 workflows:
   version: 2
   Working-Workflow:
@@ -26,9 +40,13 @@ workflows:
           filters:
             branches:
               ignore:
-                - master-removeThisIfYouWantToTestMaster
-                - develop-removeThisIfYouWantToTestDevelop
-                - develop_interim-removeThisIfYouWantToTestDevelopInterim
+
+      - Run-Hello
+
+      - Test-Hello:
+          requires:
+            - Run-Hello
+
 
       - Now-Complete:
           requires:

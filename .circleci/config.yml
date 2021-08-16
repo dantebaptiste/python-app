@@ -41,7 +41,9 @@ workflows:
             branches:
               ignore:
 
-      - Run-Hello
+      - Run-Hello:
+          requires:
+            - Branches-Filtered
 
       - Test-Hello:
           requires:

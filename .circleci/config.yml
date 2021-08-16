@@ -50,7 +50,7 @@ workflows:
           requires:
             - Run-Hello
 
-
       - Now-Complete:
           requires:
             - Branches-Filtered
+            - Test-Hello
